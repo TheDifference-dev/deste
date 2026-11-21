@@ -1,0 +1,5 @@
+deste - kart takas pazari
+
+Calistirmak icin: deste-baslat.cmd (ya da masaustundeki "deste" kisayolu).
+Bilgisayarda Python yuklu olmali (yerel sunucu 127.0.0.1:8642 portunda acilir).
+Ayrintilar: README.md
