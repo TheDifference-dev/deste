@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>deste — kart takas pazarı</title>
+<meta name="description" content="Türkiye'de koleksiyoncular arası kart pazarı: Pokémon, Yu-Gi-Oh!, Magic, One Piece ve spor kartlarını ilan ver, teklif al, takasla.">
+<link rel="icon" href="img/ikon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#8a8a8a">
+<link rel="apple-touch-icon" href="img/ikon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+</head>
+<body>
+<header class="ust">
+  <a class="logo" href="#" aria-label="deste ana sayfa">deste</a>
+  <nav class="nav" aria-label="Ana menü">
+    <a href="#nasil" data-git="nasil">Nasıl çalışır</a><a href="#pazar">Pazar</a><a href="#ilan-ver">İlan ver</a><a href="#teklifler">Teklifler<span class="say" id="rozetSay" hidden></span></a><a href="#profil" class="cta">Profilim</a>
+  </nav>
+  <button class="menu" id="menu" type="button" aria-label="Menü" aria-expanded="false" aria-controls="sheet"><span></span><span></span></button>
+  <nav class="sheet" id="sheet" aria-label="Mobil menü" inert><a href="#nasil" data-git="nasil">Nasıl çalışır</a><a href="#pazar">Pazar</a><a href="#ilan-ver">İlan ver</a><a href="#teklifler">Teklifler</a><a href="#profil">Profilim</a></nav>
+</header>
+<div class="durum-serit" id="durumSerit" hidden></div>
+
+<!-- ======================= ANA SAYFA ======================= -->
+<main id="ana" data-sayfa="ana">
+
+<section class="hikaye" id="hikaye" aria-label="deste">
+  <div class="sahne" id="sahne">
+    <div class="sutunlar"><i></i><i></i><i></i></div>
+    <div class="katman mavi" id="kMavi">
+      <div class="gren" style="opacity:.4"></div>
+      <svg class="cizgiler" id="cizgiler" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
+        <path id="c1" d="M0,470 C120,450 180,520 260,470 S420,380 500,330 S650,300 760,250 S900,200 1000,150"/>
+        <path id="c2" d="M0,150 C140,190 200,140 300,200 S450,300 500,330 S640,420 760,430 S900,470 1000,480"/>
+        <circle id="cKesisim" cx="500" cy="330" r="7"/>
+      </svg>
+      <div class="etiket e1">Senin kartın</div><div class="etiket e2">Onun kartı</div><div class="etiket e3">Takas</div>
+      <div class="yillar"><span>İlan</span><span>Teklif</span><span>Mesaj</span><span>Anlaşma</span><span>Teslim</span></div>
+      <h2 class="h48 t1 fl"><span>Takasın en</span><span>kısa yolu.</span></h2>
+      <h2 class="h48 t2 fl"><span>Arada</span><span>aracı yok.</span></h2>
+    </div>
+    <div class="katman gri" id="kGri">
+      <div class="teker" id="teker"></div>
+      <h3 class="h40 t1 fl"><span>Bir kart bir hatıra.</span><span>Elli kart bir koleksiyon.</span></h3>
+      <p class="p24 t2">deste'deki her ilan, gerçek bir koleksiyoncunun dolabından gelir.</p>
+    </div>
+    <div class="katman" id="kFiyat">
+      <div class="fiyat-blok"><p class="fiyat" id="fiyat">₺38.000</p><p class="mono" id="fiyatMeta">PSA 7 · İZMİR · TAKAS OLUR</p><a class="mono fiyat-git" id="fiyatGit" href="#pazar">İlana git →</a></div>
+    </div>
+    <div class="katman yesil" id="kYesil">
+      <div class="gren" style="opacity:.3"></div>
+      <div class="kizgara" id="kizgara"></div>
+      <h2 class="h48 t1 fl"><span>Her kartın</span><span>bir karşılığı var.</span></h2>
+      <a class="btn" href="#ilan-ver">İlan ver</a>
+      <p class="p24 t2">Sat, takasla, koleksiyonunu büyüt.<br>Kargo ya da elden, sen seç.</p>
+    </div>
+    <h2 class="h48 d-grad" id="dGrad"><span>Dereceli.</span><span>Kayıtlı.</span><span>Takaslık.</span></h2>
+    <div class="kartyeri"><div class="kartkutu" id="kartkutu"><div class="golge" id="golge"></div>
+      <div class="slab3d" id="slab3d"><div class="kenar s"></div><div class="kenar d"></div><div class="kenar u"></div><div class="kenar a"></div>
+        <div class="yuz on" id="yuzOn"></div><div class="yuz arka" id="yuzArka"></div></div></div></div>
+  </div>
+  <div class="sabitler">
+    <div class="ekran"><div class="izgara3">
+      <div class="hero-t">
+        <h1 class="h48 fl"><span>Kartların için</span>Türkiye'nin takas pazarı.</h1>
+        <p class="p18 hero-alt">Pokémon'dan Panini'ye, dereceli ya da ham kartlarını ilan ver; koleksiyonculardan para ya da takas teklifi al.</p>
+        <a class="btn genis" href="#pazar">Pazara gir</a>
+        <div class="canli"><div class="paket" aria-hidden="true"></div><div><p><b id="hIlan">–</b> aktif ilan · <b id="hSatici">–</b> satıcı</p><p class="soluk" id="hSon">Pazar yükleniyor…</p></div></div>
+      </div>
+      <div></div>
+      <div class="hero-sag"><p class="p16">Ücretsiz · Komisyonsuz</p><p class="kaydir p14">Kaydırarak keşfet <svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1v10M2 7l4 4 4-4" stroke="currentColor" fill="none" stroke-width="1.2"/></svg></p></div>
+    </div></div>
+  </div>
+</section>
+
+<section class="bolum ride" id="ride" aria-labelledby="rideH">
+  <div class="sahne">
+    <div class="ride-zemin" id="rideZemin"></div><div class="gren" style="opacity:.4"></div>
+    <p class="ride-buyuk" aria-hidden="true">DESTE</p>
+    <div class="ride-hd"><h2 class="h48 fl" id="rideH"><span>Her kart,</span>dereceli ve kayıtlı.</h2></div>
+    <div class="ride-sira" id="rideSira"></div>
+    <div class="ride-ad"><p class="p24" id="rideAd">&nbsp;</p><p class="mono" id="rideMeta">&nbsp;</p></div>
+  </div>
+</section>
+
+<section class="bolum grafik" aria-labelledby="grafikH">
+  <div class="sutunlar"><i></i><i></i><i></i></div>
+  <div class="ic">
+    <div class="ust-yazi"><p class="mono">deste pazarındaki ilan sayısı</p><p class="mono soluk">Pazara eklenen ilanların zamana göre toplamı. Canlı veriden çizilir; silinen ilanlar sayılmaz.</p></div>
+    <div class="grafik2" id="grafik2" aria-hidden="true">
+      <div class="yeks" id="yeks"></div>
+      <div class="g2"><svg id="g2svg" preserveAspectRatio="none"><path id="g2yol"/></svg><i class="nokta" id="g2nokta"></i></div>
+      <div class="xeks" id="xeks"></div>
+    </div>
+    <div class="alt"><div class="sol"><h2 class="h48 fl" id="grafikH"><span>Pazar,</span>ilan verenlerle büyür.</h2><p class="kucuk">Grafik, örnek ilanlar dahil pazardaki her ilanın eklenme tarihinden hesaplanır. Fiyat ya da değer tahmini içermez.</p></div>
+    <p class="p24 sag">Ne kadar çok koleksiyoncu ilan verirse, aradığın kartı bulma ihtimalin o kadar artar.</p></div>
+  </div>
+</section>
+
+<section class="bolum neden" id="neden" aria-labelledby="nedenH">
+  <div class="gren" style="opacity:.15"></div><div class="sutunlar"><i></i><i></i><i></i></div>
+  <div class="izgara3">
+    <div class="sol"><h2 class="h48 fl" id="nedenH"><span>Pazar yeri,</span>aracı değil.</h2>
+      <div class="liste"><p class="mono">ARACILAR SANA BUNLARI SATAR</p><p class="buyuk"><span class="ciz">Komisyon</span></p><p class="buyuk"><span class="ciz">Bekleme süresi</span></p><p class="buyuk"><span class="ciz">Gizli ücret</span></p><p class="buyuk"><span class="ciz">Ödeme bekletme</span></p><p class="buyuk"><span class="ciz">Zorunlu kargo</span></p></div></div>
+    <div></div>
+    <div class="sag"><h2 class="h48 gizli" aria-hidden="true">Pazar yeri,<br>aracı değil.</h2>
+      <div class="liste"><p class="mono">DESTE SANA BUNLARI VERİR</p><p class="buyuk">İlan</p><p class="buyuk">Teklif</p><p class="buyuk">Takas</p><p class="buyuk">Mesaj</p><p class="buyuk">Elden teslim</p></div></div>
+  </div>
+</section>
+
+<section class="bolum soz" id="soz" aria-label="deste">
+  <div class="sahne"><div class="gren" style="opacity:.4"></div>
+    <h2 class="soz-metin" id="sozMetin"></h2>
+    <div class="soz-say"><p class="mono">Pazardaki kart</p><p class="soz-n" id="sozN">00</p></div>
+  </div>
+</section>
+
+<section class="bolum kiyas" id="kiyas" aria-labelledby="kiyasH">
+  <div class="sahne"><div class="gren" style="opacity:.4"></div><div class="sutunlar"><i></i><i></i><i></i></div>
+    <div class="izgara3">
+      <div class="kiyas-sol"><h2 class="h48 t1 fl" id="kiyasH"><span>Her kategoride</span>takas sürüyor.</h2>
+        <div class="basliklar" id="basliklar"></div>
+        <p class="kaynak">Kaynak: deste pazarındaki aktif ilanlar, canlı sayım. Satılan ilanlar dahil değil.</p></div>
+      <div class="kiyas-orta"><div class="desen"></div><div class="cubuk"><b id="kiyasV">–</b><i id="kiyasBar"></i></div></div>
+      <div><p class="p24 aciklama" id="kiyasD" aria-live="polite"></p></div>
+    </div>
+  </div>
+</section>
+
+<section class="bolum adimlar" id="nasil" aria-labelledby="adimH">
+  <div class="sutunlar"><i></i><i></i><i></i></div>
+  <div class="hd"><h2 class="h48 fl" id="adimH"><span>İlandan</span>takasa dört adım.</h2></div>
+  <svg class="iz" id="iz" preserveAspectRatio="none" aria-hidden="true"><path id="izYol"/><path id="izYolDolu"/></svg>
+  <img class="binici" id="binici" src="img/kart-tilki.webp" alt="" width="90" height="126">
+  <div class="adim-alan" id="adimAlan">
+    <div class="adim R" data-y=".08"><i class="top"></i><p class="mono">ADIM 1</p><h3 class="h40">İlanını ver</h3><p class="p24">Kartın fotoğrafını yükle; set, durum ya da PSA/BGS/CGC notunu yaz, satılık mı takaslık mı seç.</p></div>
+    <div class="adim L" data-y=".33"><i class="top"></i><p class="mono">ADIM 2</p><h3 class="h40">Teklif al</h3><p class="p24">Koleksiyoncular para, takas ya da ikisinin karışımı bir teklif gönderir; ilan üzerinden mesajlaşırsınız.</p></div>
+    <div class="adim R" data-y=".58"><i class="top"></i><p class="mono">ADIM 3</p><h3 class="h40">Anlaş</h3><p class="p24">Uygun teklifi kabul et. Kabulle birlikte iki tarafın iletişim notu birbirine açılır.</p></div>
+    <div class="adim L" data-y=".83"><i class="top"></i><p class="mono">ADIM 4</p><h3 class="h40">Teslim et</h3><p class="p24">Elden ya da kargoyla teslim edin, ilanı “satıldı” olarak işaretle. Ödeme site üzerinden alınmaz.</p></div>
+  </div>
+</section>
+
+<section class="bolum sss" id="sss" aria-labelledby="sssH">
+  <div class="gren" style="opacity:.4"></div><div class="sutunlar"><i></i><i></i><i></i></div>
+  <div class="izgara3"><div><h2 class="sss-h" id="sssH">Sorular, cevaplar.</h2></div><div class="sss-l">
+    <div class="sc"><h3>deste nedir?</h3><p>Koleksiyoncuların kartlarını ilan verdiği, birbirine satış ya da takas teklifi gönderdiği ücretsiz bir pazar yeri. Pokémon, Yu-Gi-Oh!, Magic, One Piece ve futbol, basketbol gibi spor kartları için.</p></div>
+    <div class="sc"><h3>Ödeme site üzerinden mi yapılıyor?</h3><p>Hayır. Site ödeme almaz ve aracılık etmez; teklif kabul edildikten sonra taraflar ödeme ve teslimatı kendi aralarında ayarlar.</p></div>
+    <div class="sc"><h3>Takas nasıl işler?</h3><p>İlanda “Takas” ya da “Para + takas” teklifini seç, kendi ilanlarından birini işaretle ya da elindeki kartı yaz. Satıcı kabul ederse iletişim notlarınız birbirinize görünür.</p></div>
+    <div class="sc"><h3>Derecelendirilmiş kart nasıl doğrulanır?</h3><p>PSA, BGS ve CGC kartlarının etiketinde sertifika numarası vardır; numarayı kurumun sitesinde sorgula, kayıttaki kart, not ve yılın ilanla aynı olduğuna bak.</p></div>
+    <div class="sc"><h3>Hesap açmam gerekiyor mu?</h3><p>Hayır. İlk ilanında ya da teklifinde bir takma ad seçersin; hesabın bu tarayıcıya bağlı kalır. Tarayıcı verilerini silersen ilanlarını yönetemezsin.</p></div>
+    <div class="sc"><h3>Bilgilerimi kimler görür?</h3><p>Takma adın, şehrin, ilanların ve tekliflerin herkese açıktır. İletişim notunu yalnızca bilmesini istediğin kadar yaz; ekranda sadece kabul edilen teklifin karşı tarafına gösterilir.</p></div>
+  </div><div></div></div>
+</section>
+</main>
+
+<!-- ======================= UYGULAMA ======================= -->
+<main id="uygulama" data-sayfa="uygulama" hidden>
+  <div class="sutunlar sabit"><i></i><i></i><i></i></div><div class="gren sabit" style="opacity:.3"></div>
+
+  <section class="gorunum" data-gorunum="pazar" hidden>
+    <div class="u-bas"><h1 class="h48"><span class="soluk">Pazar</span><br><span id="pazarSay">&nbsp;</span></h1>
+      <form class="filtre" id="filtre" onsubmit="return false">
+        <label class="q">Ara<input id="fQ" type="search" placeholder="Charizard, Blue-Eyes, Prizm…"></label>
+        <label>Kategori<select id="fKat"><option value="">Tümü</option></select></label>
+        <label>Tür<select id="fTip"><option value="">Tümü</option><option value="satis">Satılık</option><option value="takas">Takasa açık</option></select></label>
+        <label>Durum<select id="fDer"><option value="">Tümü</option><option value="ham">Ham</option><option value="dereceli">Dereceli</option></select></label>
+        <label>Şehir<select id="fIl"><option value="">Tüm Türkiye</option></select></label>
+        <label>En az ₺<input id="fMin" type="number" inputmode="numeric" min="0" placeholder="0"></label>
+        <label>En çok ₺<input id="fMax" type="number" inputmode="numeric" min="0" placeholder="∞"></label>
+        <label>Sırala<select id="fSira"><option value="yeni">En yeni</option><option value="ucuz">Fiyat: artan</option><option value="pahali">Fiyat: azalan</option></select></label>
+        <label class="onay"><input type="checkbox" id="fSatilan">Satılanlar</label>
+        <button type="button" class="btn cizgi" id="fSifir">Temizle</button>
+      </form></div>
+    <div class="ilanlar" id="pazarGrid"></div>
+  </section>
+
+  <section class="gorunum" data-gorunum="ilan-ver" hidden>
+    <div class="u-bas"><h1 class="h48"><span class="soluk">Yeni ilan</span><br>Kartını pazara çıkar.</h1></div>
+    <p class="kapi" id="ilanKapi" hidden></p>
+    <div class="form2">
+      <form id="ilanForm" class="alanlar" novalidate>
+        <label class="tam" id="takmaSatir" hidden>Takma adın <small>Herkese görünür, bir kez sorulur</small><input id="iTakma" maxlength="30" autocomplete="nickname"></label>
+        <label class="tam">Kart adı<input id="iBaslik" maxlength="90" placeholder="Örn. Charizard Holo – Base Set"></label>
+        <label>Kategori<select id="iKat"></select></label>
+        <label>Set / yıl <small>isteğe bağlı</small><input id="iSet" maxlength="60" placeholder="Base Set 1999, 1. baskı"></label>
+        <label>Durum<select id="iDurum"></select></label>
+        <label id="notSatir" hidden>Not (1–10)<input id="iNot" type="number" min="1" max="10" step="0.5" inputmode="decimal"></label>
+        <div class="tam"><span class="etk">İlan türü</span><div class="secim">
+          <label><input type="radio" name="iTip" value="satis" checked>Satılık</label>
+          <label><input type="radio" name="iTip" value="takas">Sadece takas</label>
+          <label><input type="radio" name="iTip" value="ikisi">Satılık, takas da olur</label></div></div>
+        <label id="fiyatSatir">Fiyat (₺)<input id="iFiyat" type="number" min="1" step="1" inputmode="numeric"></label>
+        <label>Şehir<select id="iSehir"></select></label>
+        <label class="tam" id="istenenSatir" hidden>Karşılığında aradığın kartlar <small>isteğe bağlı</small><input id="iIstenen" maxlength="140" placeholder="Örn. Lugia Neo Genesis, PSA 8+ Pikachu"></label>
+        <label class="tam">Açıklama <small>isteğe bağlı</small><textarea id="iAcik" maxlength="800" placeholder="Kusurlar, kılıf, kargo tercihi…"></textarea></label>
+        <label class="tam">Fotoğraf <small>isteğe bağlı; ön yüz, net ve düz</small><input id="iFoto" type="file" accept="image/*"></label>
+        <div class="tam satir"><button class="btn" id="iGonder">İlanı yayınla</button><span class="mono" id="iHata" role="alert"></span></div>
+      </form>
+      <aside class="onizle"><p class="mono">ÖNİZLEME</p><div id="onizleme"></div></aside>
+    </div>
+  </section>
+
+  <section class="gorunum" data-gorunum="teklifler" hidden>
+    <div class="u-bas"><h1 class="h48"><span class="soluk">Teklifler</span><br>Gelen ve giden.</h1></div>
+    <p class="kapi" id="teklifKapi" hidden></p>
+    <div class="iki" id="teklifAlan"></div>
+  </section>
+
+  <section class="gorunum" data-gorunum="profil" hidden>
+    <div class="u-bas"><h1 class="h48"><span class="soluk">Profilim</span><br><span id="profilAd">Koleksiyoncu</span></h1></div>
+    <p class="kapi" id="profilKapi" hidden></p>
+    <div class="form2">
+      <div><p class="mono">İLANLARIM</p><div class="listem" id="ilanlarim"></div></div>
+      <form id="profilForm" class="alanlar tek">
+        <label>Takma ad<input id="pTakma" maxlength="30" autocomplete="nickname"></label>
+        <label>Şehir<select id="pSehir"></select></label>
+        <label>İletişim notu <small>Yalnız kabul edilen teklifin karşı tarafına gösterilir</small><input id="pIletisim" maxlength="120" placeholder="Örn. Instagram @kullaniciadi"></label>
+        <div class="satir"><button class="btn">Kaydet</button><span class="mono" id="pDurum" role="status"></span></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="bolum ayak" id="ayak">
+  <div class="gren" style="opacity:.4"></div>
+  <div class="final"><div class="final-kart" id="finalKart"><div class="slab3d" id="finalSlab"><div class="kenar s"></div><div class="kenar d"></div><div class="kenar u"></div><div class="kenar a"></div><div class="yuz on" id="finalOn"></div><div class="yuz arka" id="finalArka"></div></div></div></div>
+  <div class="sutunlar"><i></i><i></i><i></i></div>
+  <div class="izgara3">
+    <div class="sol"><h2 class="h48 fl"><span>En sevilen kartlar,</span>bir takas uzağında.</h2><a class="btn" href="#pazar">Pazara gir</a>
+      <p class="yasal">© 2026 deste. Türkiye'de koleksiyoncular arası kart pazarı. Site ödeme almaz, aracılık ya da yatırım hizmeti sunmaz; alışveriş ve takas taraflar arasında yapılır. Örnek ilanlardaki fiyatlar temsilîdir.</p></div>
+    <div class="orta desenli"><div class="rozet-k"><span class="ik">₺0</span><span class="p24">Ücretsiz ilan</span><small>Komisyon yok</small></div><div class="rozet-k"><span class="ik">81</span><span class="p24">Türkiye geneli</span><small>Elden ya da kargo</small></div></div>
+    <div class="sag"><p class="p24">Koleksiyon bir tutku.<br>Takasla büyüt.</p>
+      <div class="baglar"><a href="#pazar">Pazar</a><a href="#ilan-ver">İlan ver</a><a href="#sss" data-git="sss">Sık sorulanlar</a></div></div>
+  </div>
+</footer>
+
+<dialog id="dlg" aria-label="İlan ayrıntısı"><button class="kapat" id="kapat" aria-label="Kapat">×</button><div id="detay"></div></dialog>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="js/ayar.js"></script>
+<script src="js/vendor/supabase.js"></script>
+<script src="js/veri.js"></script>
+<script src="js/slab.js"></script>
+<script src="js/ana.js"></script>
+<script src="js/uygulama.js"></script>
+</body>
+</html>
