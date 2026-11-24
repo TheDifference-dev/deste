@@ -41,3 +41,4 @@ Yerelde denemek için: `python3 -m http.server` ve `http://localhost:8000`. `js/
 - Site ödeme almaz, aracılık ya da yatırım hizmeti sunmaz; alışveriş taraflar arasındadır.
 - Resmî kart görselleri depoya kopyalanmaz, ilgili API'nin sunucusundan gösterilir; hakları sahiplerine aittir.
 - Örnek ilanlar (`ornek: true`) gerçek kullanıma geçmeden silinmeli.
+- Örnek ilanlar gerçek Pokémon, Magic, Yu-Gi-Oh! ve One Piece kartlarıdır; fiyat kaynakları ve kur `docs/fiyat-kaynaklari.md` dosyasında. Görsel yalnız doğrudan bağlantıya izin veren kaynaklardan (Scryfall, Pokémon TCG API) gösterilir; Yu-Gi-Oh! ve One Piece ilanları temsilî çizimle görünür. Görsel önceliği: satıcı fotoğrafı › resmî görsel › özgün çizim.

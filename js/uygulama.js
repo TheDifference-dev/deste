@@ -4,7 +4,7 @@
   const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
   const rid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
   const opts = (arr, sec) => arr.map(([v, t]) => `<option value="${esc(v)}"${v === sec ? " selected" : ""}>${esc(t)}</option>`).join("");
-  const RESMI = /^https:\/\/(images\.pokemontcg\.io|cards\.scryfall\.io)\/[A-Za-z0-9_\-./]+\.(png|jpg|jpeg|webp)(\?[0-9]+)?$/;
+  const RESMI = D.RESMI; // izinli resmî görsel adresleri (js/slab.js)
   const S = { gorunum: "ana", onizFoto: null, resmi: "", sil: null, profilDoldu: false };
 
   $("#fKat").insertAdjacentHTML("beforeend", opts(D.KATS));
@@ -22,7 +22,7 @@
   const ben = () => Veri.users[Veri.uid] || {};
   const benimIlanlar = () => D.ilanlar().filter(k => k.saticiId === Veri.uid);
   const yazmaHazir = () => !!Veri.uid && !Veri.kapi();
-  const resim = k => k.foto ? D.resim(k) : (typeof k.resmi === "string" && RESMI.test(k.resmi) ? k.resmi : D.sanatFor(k));
+  const resim = k => D.resim(k); // fotoğraf > resmî görsel > özgün çizim (js/ana.js)
   let tt; const bildir = m => { const t = $("#toast"); t.textContent = m; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => t.hidden = true, 3400); };
 
   /* ---------- kart HTML ---------- */
@@ -192,7 +192,7 @@ ${ben().takmaAd ? "" : `<label class="tam">Takma adın<input id="tTakma" maxleng
 <label class="tam" id="tMetinS">Kartı yaz<input id="tMetin" maxlength="140" placeholder="Örn. Pikachu Promo, PSA 9"></label>
 <label class="tam">Mesaj <small>isteğe bağlı</small><textarea id="tMesaj" maxlength="300"></textarea></label>
 <div class="tam satir"><button class="btn">Teklifi gönder</button><span class="mono" id="tHata" role="alert"></span></div></form>`;
-    const kaynak = k.foto ? "Satıcının fotoğrafı" : (typeof k.resmi === "string" && RESMI.test(k.resmi)) ? (k.resmi.includes("scryfall") ? "Resmî görsel · Scryfall" : "Resmî görsel · Pokémon TCG API") : "Fotoğraf eklenmemiş · temsilî deste kartı";
+    const kaynak = k.foto ? "Satıcının fotoğrafı" : D.resmiGecerli(k) ? "Resmî görsel · " + D.resmiKaynak(k.resmi) : "Fotoğraf eklenmemiş · temsilî deste kartı";
     $("#detay").innerHTML = `<div class="detay"><div class="dg" data-egim>${D.slab(k, resim(k))}<p class="mono">${esc(kaynak)}</p></div><div class="di">
 <p class="mono">${esc(D.KAT[k.kategori] || "Diğer")}${k.ornek ? " · örnek ilan" : ""}</p><h2>${esc(k.baslik)}</h2><p class="fy">${esc(D.fiyatMetni(k))}</p>
 <dl><dt>Durum</dt><dd>${esc(D.dereceMetni(k))}</dd>${k.set ? `<dt>Set / yıl</dt><dd>${esc(k.set)}</dd>` : ""}<dt>Satıcı</dt><dd>${esc(k.satici)}</dd>${k.sehir ? `<dt>Şehir</dt><dd>${esc(k.sehir)}</dd>` : ""}${k.istenen ? `<dt>Aradığı</dt><dd>${esc(k.istenen)}</dd>` : ""}<dt>Eklendi</dt><dd>${D.sure(k.tarih)}</dd></dl>

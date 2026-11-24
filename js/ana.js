@@ -15,8 +15,10 @@
   D.aktif = () => D.ilanlar().filter(k => !k.satildi);
   let yenileZ;
   D.yenile = () => { clearTimeout(yenileZ); yenileZ = setTimeout(() => window.dispatchEvent(new Event("deste:veri")), 80); };
+  /* görsel önceliği: satıcının fotoğrafı > resmî kart görseli (izinli kaynak, claude.ai dışında) > özgün deste çizimi */
   D.resim = k => {
     if (k.foto) { const c = Veri.fotoOnbellek(k.saticiId, k.id); if (c) return c; if (c === undefined) Veri.fotoAdresi(k.saticiId, k.id, k.foto).then(u => u && D.yenile()); }
+    if (D.resmiGecerli(k)) return k.resmi;
     return D.sanatFor(k);
   };
   D.sure = t => { const d = (Date.now() - (t || 0)) / 6e4; return d < 1 ? "az önce" : d < 60 ? `${Math.round(d)} dk önce` : d < 1440 ? `${Math.round(d / 60)} sa önce` : new Date(t).toLocaleDateString("tr-TR", { day: "numeric", month: "short" }); };
@@ -155,7 +157,10 @@
     const p = clamp(-r.top / (ride.offsetHeight - innerHeight)), n = rideKartlar.length, c = p * (n - 1);
     $$("#rideSira .rk").forEach(el => { const d = +el.dataset.i - c, ad = Math.abs(d);
       el.style.transform = `translateX(${d * 250}px) translateZ(${-ad * 260}px) rotateY(${-Math.sign(d) * Math.min(ad, 1.4) * 28}deg)`;
-      el.style.filter = `blur(${Math.min(9, ad * 3.2).toFixed(1)}px)`; el.style.opacity = String(clamp(1 - (ad - 2.6) * .6)); el.style.zIndex = String(100 - Math.round(ad * 10)); });
+      // resmî kart görselleri bulanıklaştırılmaz (Scryfall görsel kuralları); derinlik yalnız saydamlıkla verilir
+      const gercek = !!el.querySelector(".sl.gercek");
+      el.style.filter = gercek ? "none" : `blur(${Math.min(9, ad * 3.2).toFixed(1)}px)`;
+      el.style.opacity = String(gercek ? clamp(1 - Math.max(0, ad - .6) * .4) : clamp(1 - (ad - 2.6) * .6)); el.style.zIndex = String(100 - Math.round(ad * 10)); });
     const i = Math.round(c);
     if (i !== rideSon) { rideSon = i; const k = rideKartlar[i]; if (!k) return;
       $("#rideAd").textContent = k.baslik;
