@@ -4,7 +4,7 @@ Hazırlanma tarihi: 24.11.2026. Dosya: `data/katalog.json`. 400 kayıt var, her 
 
 Kartların hiçbir görseli indirilmedi ve depoya kopyalanmadı. `resmi` alanında yalnız kaynağın kendi görsel adresi durur (hotlink). Yu-Gi-Oh! ve One Piece kayıtlarında bu alan boştur.
 
-`tur` alanı (24.11.2026): Yu-Gi-Oh! için YGOPRODeck `attribute` (büyü/tuzak kartlarında SPELL/TRAP), Pokémon için Pokémon TCG API `types[0]` (eğitmen kartlarında `supertype`), One Piece için OPTCG API `card_color`. Arayüzde yalnız temsilî çizimin renk ve desenini seçer. 1 Pokémon kaydında (sv3-223) API 502 verdiği için boş.
+`tur` alanı (24.11.2026): Yu-Gi-Oh! için YGOPRODeck `attribute` (büyü/tuzak kartlarında SPELL/TRAP), Pokémon için Pokémon TCG API `types[0]` (eğitmen kartlarında `supertype`), One Piece için OPTCG API `card_color`. Arayüzde yalnız temsilî çizimin renk ve desenini seçer. sv3-223 (Charizard ex, Obsidian Flames) için API 502 verdi; tür (Darkness) TCGplayer satıcı sayfası, Bulbapedia ve pkmncards.com kayıtlarıyla eşleştirilerek elle girildi.
 
 ## Şema
 
