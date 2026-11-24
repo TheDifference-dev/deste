@@ -333,6 +333,45 @@ dialog::backdrop{background:rgba(20,19,18,.6);backdrop-filter:blur(4px)}
 .ilan .sl,.dg .sl{transition:transform .25s ease-out}
 [data-egim].egik .sl{transition:transform .08s linear}
 
+/* ---- katalog ---- */
+.kat-arac{display:grid;gap:12px}
+.sekmeler{display:flex;flex-wrap:wrap;gap:6px}
+.sekmeler button{height:36px;padding:0 14px;border-radius:4px;border:0;background:rgba(255,255,255,.14);color:#fff;font:14px var(--F);cursor:pointer;transition:background .15s}
+.sekmeler button:hover{background:rgba(255,255,255,.24)}
+.sekmeler button[aria-selected=true]{background:#fff;color:#000}
+.sekmeler small{font:11px var(--M);opacity:.65}
+.kat-arac label{display:grid;gap:6px;font:12px var(--M);text-transform:uppercase;color:rgba(255,255,255,.8)}
+.kat-olcut{margin:-12px 0 28px;text-transform:none;max-width:900px}
+.kat-olcut a,.kat-kapali a,.kk-tr a{color:#fff}
+.kk{display:grid;gap:8px;align-content:start}
+.kk .sl{transition:transform .25s ease-out}
+.kk h3{font-size:18px;line-height:22px;letter-spacing:-.4px;overflow-wrap:anywhere}
+.kk .mono{color:rgba(255,255,255,.7);text-transform:none;overflow-wrap:anywhere}
+.kk .kk-sira{color:rgba(255,255,255,.55)}
+.kk-pazar{display:grid;gap:8px;font-size:14px;line-height:18px}
+.kk-pazar b{font-weight:600}
+.kk .satir{gap:6px}
+.kk .btn{height:32px;min-height:32px;padding:0 10px;font-size:13px;flex:1 1 auto}
+.kk-tr{font-size:13px;line-height:17px;background:rgba(0,0,0,.2);padding:6px 8px;border-radius:4px;overflow-wrap:anywhere}
+.kk-atif{font:10px/13px var(--M);color:rgba(255,255,255,.55);overflow-wrap:anywhere}
+.kat-daha{display:flex;justify-content:center;margin-top:36px}
+.kat-daha .btn{white-space:normal;height:auto;padding:9px 16px}
+.kat-kapali{margin-top:80px;max-width:900px}
+.kat-kapali .mono{margin-top:12px;text-transform:none}
+.kapali-l{list-style:none;margin:20px 0 0;padding:0;border-top:1px solid var(--cizgi)}
+.kapali-l li{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,200px);gap:16px;padding:12px 0;border-bottom:1px solid var(--cizgi);align-items:baseline;font-size:16px}
+.kapali-l .f{font-variant-numeric:tabular-nums;white-space:nowrap}
+.kapali-l .m{font:12px var(--M);text-align:right;overflow-wrap:anywhere}
+/* ilan formu: katalogdan öneri listesi */
+.oneri-kap{position:relative}
+.oneri{position:absolute;left:0;right:0;top:100%;margin:4px 0 0;padding:4px;list-style:none;background:#fff;color:#000;border-radius:4px;box-shadow:0 12px 28px rgba(0,0,0,.35);z-index:20;max-height:340px;overflow:auto}
+.oneri li{display:grid;gap:2px;padding:8px 10px;border-radius:3px;cursor:pointer;font-size:15px;line-height:19px}
+.oneri li b{font-weight:500;overflow-wrap:anywhere}
+.oneri li span{font:12px/15px var(--M);color:rgba(0,0,0,.6);overflow-wrap:anywhere}
+.oneri li:hover{background:#ecebe8}
+.oneri li[aria-selected=true]{background:#163a92;color:#fff}
+.oneri li[aria-selected=true] span{color:rgba(255,255,255,.8)}
+
 /* ---- dar ekran ---- */
 @media (max-width:1100px){.h48{font-size:40px;line-height:40px;letter-spacing:-1px}.fiyat{font-size:76px;line-height:84px}.soz-metin{font-size:52px;line-height:60px}}
 @media (max-width:809px){
@@ -409,5 +448,7 @@ dialog::backdrop{background:rgba(20,19,18,.6);backdrop-filter:blur(4px)}
   .ilanlar{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 12px}
   .onizle{position:static}
   .detay .dg{min-height:300px}
+  .kapali-l li{grid-template-columns:minmax(0,1fr) auto;gap:4px 12px}
+  .kapali-l .m{grid-column:1/-1;text-align:left}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}

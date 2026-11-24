@@ -67,6 +67,14 @@
     return `<div class="resmi"><button type="button" class="btn cizgi" id="resmiAra">Resmî kart görselini bul</button>${S.resmi ? ` <button type="button" class="btn cizgi" id="resmiKaldir">Kaldır</button>` : ""}<div class="resmi-sonuc" id="resmiSonuc"></div>
 <p class="mono soluk" style="text-transform:none;margin-top:8px">Kaynak: ${k.kategori === "magic" ? "Scryfall" : "Pokémon TCG API"}. Görsel kaynağından gösterilir; kart görselleri hak sahiplerine aittir.</p></div>`;
   }
+  /* katalog kaydıyla formu doldur (js/katalog.js: öneri listesi ve "Bu kartı sat") */
+  D.ilanFormDoldur = k => {
+    $("#iBaslik").value = String(k.ad || "").slice(0, 90);
+    if (D.KAT[k.marka]) $("#iKat").value = k.marka;
+    $("#iSet").value = [k.set, k.numara, k.yil].filter(Boolean).join(" · ").slice(0, 60);
+    S.resmi = D.resmiGecerli({ resmi: k.resmi }) && resmiDestek(k.marka) ? k.resmi : "";
+    $("#iHata").textContent = ""; onizle();
+  };
   async function resmiAra() {
     const k = formIlan(), q = k.baslik.replace(/[–—-].*$/, "").trim(), out = $("#resmiSonuc");
     if (q.length < 2) { out.textContent = "Önce kart adını yaz."; return; }
@@ -260,7 +268,7 @@ ${k.aciklama ? `<p style="white-space:pre-line;color:rgba(255,255,255,.85)">${es
   }, { passive: true });
 
   /* ---------- yönlendirme ---------- */
-  const GOR = ["pazar", "ilan-ver", "teklifler", "profil"];
+  const GOR = ["pazar", "katalog", "ilan-ver", "teklifler", "profil"];
   function rota() {
     let h = location.hash.slice(1); const uyg = GOR.includes(h);
     S.gorunum = uyg ? h : "ana";
@@ -285,7 +293,7 @@ ${k.aciklama ? `<p style="white-space:pre-line;color:rgba(255,255,255,.85)">${es
     const bek = teklifler().filter(t => t.saticiId === Veri.uid && durum(t) === "bekliyor").length; $("#rozetSay").hidden = !bek; $("#rozetSay").textContent = bek;
     const ds = $("#durumSerit"); ds.hidden = !Veri.hata; ds.textContent = Veri.hata;
     if (!S.profilDoldu && Veri.hazir && Veri.uid) { const b = ben(); $("#pTakma").value = b.takmaAd || ""; $("#pSehir").value = b.sehir || ""; $("#pIletisim").value = b.iletisim || ""; if (!$("#iSehir").value) $("#iSehir").value = b.sehir || ""; S.profilDoldu = true; }
-    if (S.gorunum === "pazar") pazarCiz(); else if (S.gorunum === "teklifler") teklifCiz(); else if (S.gorunum === "profil") profilCiz(); else if (S.gorunum === "ilan-ver") onizle();
+    if (S.gorunum === "pazar") pazarCiz(); else if (S.gorunum === "teklifler") teklifCiz(); else if (S.gorunum === "profil") profilCiz(); else if (S.gorunum === "ilan-ver") onizle(); else if (S.gorunum === "katalog") D.katalogCiz();
   }
   window.addEventListener("deste:veri", ciz);
 

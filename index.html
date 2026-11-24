@@ -17,10 +17,10 @@
 <header class="ust">
   <a class="logo" href="#" aria-label="deste ana sayfa">deste</a>
   <nav class="nav" aria-label="Ana menü">
-    <a href="#nasil" data-git="nasil">Nasıl çalışır</a><a href="#pazar">Pazar</a><a href="#ilan-ver">İlan ver</a><a href="#teklifler">Teklifler<span class="say" id="rozetSay" hidden></span></a><a href="#profil" class="cta">Profilim</a>
+    <a href="#nasil" data-git="nasil">Nasıl çalışır</a><a href="#pazar">Pazar</a><a href="#katalog">Katalog</a><a href="#ilan-ver">İlan ver</a><a href="#teklifler">Teklifler<span class="say" id="rozetSay" hidden></span></a><a href="#profil" class="cta">Profilim</a>
   </nav>
   <button class="menu" id="menu" type="button" aria-label="Menü" aria-expanded="false" aria-controls="sheet"><span></span><span></span></button>
-  <nav class="sheet" id="sheet" aria-label="Mobil menü" inert><a href="#nasil" data-git="nasil">Nasıl çalışır</a><a href="#pazar">Pazar</a><a href="#ilan-ver">İlan ver</a><a href="#teklifler">Teklifler</a><a href="#profil">Profilim</a></nav>
+  <nav class="sheet" id="sheet" aria-label="Mobil menü" inert><a href="#nasil" data-git="nasil">Nasıl çalışır</a><a href="#pazar">Pazar</a><a href="#katalog">Katalog</a><a href="#ilan-ver">İlan ver</a><a href="#teklifler">Teklifler</a><a href="#profil">Profilim</a></nav>
 </header>
 <div class="durum-serit" id="durumSerit" hidden></div>
 
@@ -177,13 +177,26 @@
     <div class="ilanlar" id="pazarGrid"></div>
   </section>
 
+  <section class="gorunum" data-gorunum="katalog" hidden>
+    <div class="u-bas"><h1 class="h48"><span class="soluk">Katalog</span><br><span id="katSay">&nbsp;</span></h1>
+      <div class="kat-arac">
+        <div class="sekmeler" id="katSekme" role="tablist" aria-label="Marka"><button type="button" role="tab" id="katT-pokemon" data-marka="pokemon" aria-controls="katGrid" aria-selected="true">Pokémon</button><button type="button" role="tab" id="katT-yugioh" data-marka="yugioh" aria-controls="katGrid" aria-selected="false" tabindex="-1">Yu-Gi-Oh!</button><button type="button" role="tab" id="katT-magic" data-marka="magic" aria-controls="katGrid" aria-selected="false" tabindex="-1">Magic</button><button type="button" role="tab" id="katT-onepiece" data-marka="onepiece" aria-controls="katGrid" aria-selected="false" tabindex="-1">One Piece</button></div>
+        <label class="q">Katalogda ara<input id="katQ" type="search" placeholder="Charizard, Blue-Eyes, Luffy…" autocomplete="off"></label>
+      </div></div>
+    <p class="mono soluk kat-olcut" id="katOlcut" hidden></p>
+    <div class="ilanlar katalog" id="katGrid" role="tabpanel" aria-label="Katalog kartları"></div>
+    <div class="kat-daha"><button type="button" class="btn cizgi" id="katDaha" hidden>Daha fazla göster</button></div>
+    <section class="kat-kapali" id="katKapali" aria-labelledby="katKapaliH" hidden></section>
+  </section>
+
   <section class="gorunum" data-gorunum="ilan-ver" hidden>
     <div class="u-bas"><h1 class="h48"><span class="soluk">Yeni ilan</span><br>Kartını pazara çıkar.</h1></div>
     <p class="kapi" id="ilanKapi" hidden></p>
     <div class="form2">
       <form id="ilanForm" class="alanlar" novalidate>
         <label class="tam" id="takmaSatir" hidden>Takma adın <small>Herkese görünür, bir kez sorulur</small><input id="iTakma" maxlength="30" autocomplete="nickname"></label>
-        <label class="tam">Kart adı<input id="iBaslik" maxlength="90" placeholder="Örn. Charizard Holo – Base Set"></label>
+        <div class="tam oneri-kap"><label>Kart adı <small>Katalogdan seç ya da kendin yaz</small><input id="iBaslik" maxlength="90" placeholder="Örn. Charizard Holo – Base Set" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="iOneri"></label>
+          <ul class="oneri" id="iOneri" role="listbox" aria-label="Katalogdan kart önerileri" hidden></ul></div>
         <label>Kategori<select id="iKat"></select></label>
         <label>Set / yıl <small>isteğe bağlı</small><input id="iSet" maxlength="60" placeholder="Base Set 1999, 1. baskı"></label>
         <label>Durum<select id="iDurum"></select></label>
@@ -245,6 +258,7 @@
 <script src="js/veri.js"></script>
 <script src="js/slab.js"></script>
 <script src="js/ana.js"></script>
+<script src="js/katalog.js"></script>
 <script src="js/uygulama.js"></script>
 </body>
 </html>

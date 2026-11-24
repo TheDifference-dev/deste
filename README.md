@@ -7,7 +7,8 @@ Tasarım dili tradetash.com'dan esinlenir: taş gri sahne, üç sütunlu ızgara
 ## Özellikler
 - **Ana sayfa:** kaydırmayla yönetilen sahne (kılıf dönüşü, fiyat, mavi takas çizgileri, kart çarkı, yeşil kart ızgarası), canlı ilanlardan kayan galeri, ilan sayısı grafiği, kategori kıyası, dört adımlık iz, SSS, 3B final kartı.
 - **Pazar:** arama (Türkçe karakterden bağımsız), kategori, satılık/takaslık, ham/dereceli, 81 il, fiyat aralığı, sıralama.
-- **İlan ver:** fotoğraf (tarayıcıda ~170 KB'a sıkıştırılır), canlı önizleme; Magic ve Pokémon için resmî kart görselini kaynağından (Scryfall / Pokémon TCG API) seçme.
+- **Katalog:** Pokémon, Yu-Gi-Oh!, Magic ve One Piece'in en popüler kartları; marka sekmeleri, Türkçe karakterden bağımsız arama, popülerlik sırası. Her kartta pazardaki ilan sayısı, “İlanları gör” ve “Bu kartı sat” (ilan formunu doldurur); varsa Türk mağazalarındaki tek kart fiyatı ve kapalı ürün (booster, kutu) fiyat özeti, kaynak bağlantılı.
+- **İlan ver:** kart adını yazarken katalogdan öneri (klavye ve fareyle seçilir; marka, set ve resmî görsel kendiliğinden dolar, katalogda olmayan kart serbestçe yazılır), fotoğraf (tarayıcıda ~170 KB'a sıkıştırılır), canlı önizleme; Magic ve Pokémon için resmî kart görselini kaynağından (Scryfall / Pokémon TCG API) seçme.
 - **Teklifler:** para / takas / karma teklif, kabul–red, mesajlaşma; kabulde iki tarafın iletişim notu açılır.
 - **Profil:** takma ad, şehir, iletişim notu, ilan yönetimi, hesap anahtarını başka cihaza taşıma.
 - **Yüklenebilir uygulama (PWA):** Chrome'da “Yükle” ile masaüstü/telefon uygulaması gibi açılır.
@@ -19,13 +20,16 @@ Kayıt yok. Her tarayıcı rastgele 48 haneli bir **gizli anahtar** üretir; kul
 ## Dosyalar
 | Yol | İçerik |
 |---|---|
-| `index.html` | Tüm sayfa (ana sayfa + uygulama görünümleri, `#pazar`, `#ilan-ver`, `#teklifler`, `#profil`) |
+| `index.html` | Tüm sayfa (ana sayfa + uygulama görünümleri, `#pazar`, `#katalog`, `#ilan-ver`, `#teklifler`, `#profil`) |
 | `css/site.css` | Tasarım ve animasyon stilleri |
 | `js/ayar.js` | Supabase adresi ve publishable anahtar |
 | `js/veri.js` | Veri katmanı: Supabase · claude.ai · yerel deneme |
 | `js/slab.js` | Kart kılıfı bileşeni ve ortak yardımcılar |
 | `js/ana.js` | Ana sayfa kaydırma animasyonları |
 | `js/uygulama.js` | Pazar, ilan, teklif, profil mantığı |
+| `js/katalog.js` | Katalog sayfası, mağaza fiyatları, ilan formunda katalog önerisi |
+| `data/katalog.json` | Popüler kart kataloğu (marka, set, numara, popülerlik sırası, resmî görsel) |
+| `data/tr-fiyatlar.json` | Türk mağazalarından tek kart ve kapalı ürün fiyatları (yoksa bölüm gizlenir) |
 | `supabase/schema.sql` | Veritabanı şeması, güvenlik kuralları, RPC'ler |
 | `img/kart-*.webp` | Projeye özgü kart çizimleri |
 | `tools/kartlar.py` | Kart çizimlerini üreten betik |
