@@ -1,14 +1,14 @@
 # deste — kart takas pazarı
 
-Türkiye'de koleksiyoncuların kartlarını ilan verdiği, birbirine **para, takas ya da para + takas** teklifi gönderdiği bir pazar yeri. Pokémon, Yu-Gi-Oh!, Magic: The Gathering, One Piece ve futbol, basketbol kartları için.
+Türkiye'de koleksiyoncuların kartlarını ilan verdiği, birbirine **para, takas ya da para + takas** teklifi gönderdiği bir pazar yeri. Pokémon, Yu-Gi-Oh!, Magic: The Gathering, One Piece, Riftbound, Disney Lorcana, Gundam Card Game ve futbol, basketbol kartları için.
 
 Tasarım dili tradetash.com'dan esinlenir: taş gri sahne, üç sütunlu ızgara, kaydırmayla dönen 3B dereceli kart kılıfı, renkli katman geçişleri, kayan kart galerisi, adım izi. Kod, metinler ve kart çizimleri bu projeye özgüdür; başka bir markanın görseli ya da adı kullanılmaz.
 
 ## Özellikler
 - **Ana sayfa:** kaydırmayla yönetilen sahne (kılıf dönüşü, fiyat, mavi takas çizgileri, kart çarkı, yeşil kart ızgarası), canlı ilanlardan kayan galeri, ilan sayısı grafiği, kategori kıyası, dört adımlık iz, SSS, 3B final kartı.
 - **Pazar:** arama (Türkçe karakterden bağımsız), kategori, satılık/takaslık, ham/dereceli, 81 il, fiyat aralığı, sıralama.
-- **Katalog:** Pokémon, Yu-Gi-Oh!, Magic ve One Piece'in en popüler kartları; marka sekmeleri, Türkçe karakterden bağımsız arama, popülerlik sırası. Her kartta pazardaki ilan sayısı, “İlanları gör” ve “Bu kartı sat” (ilan formunu doldurur); varsa Türk mağazalarındaki tek kart fiyatı ve kapalı ürün (booster, kutu) fiyat özeti, kaynak bağlantılı.
-- **İlan ver:** kart adını yazarken katalogdan öneri (klavye ve fareyle seçilir; marka, set ve resmî görsel kendiliğinden dolar, katalogda olmayan kart serbestçe yazılır), fotoğraf ya da kart görseli yükleme (tarayıcıda ~170 KB'a sıkıştırılır), görsel bağlantısı, canlı önizleme; Magic ve Pokémon için resmî kart görselini kaynağından (Scryfall / Pokémon TCG API) seçme.
+- **Katalog:** Pokémon, Yu-Gi-Oh!, Magic: The Gathering ve One Piece'in en popüler kartları; marka sekmeleri, Türkçe karakterden bağımsız arama, popülerlik sırası. Her kartta pazardaki ilan sayısı, “İlanları gör” ve “Bu kartı sat” (ilan formunu doldurur); varsa Türk mağazalarındaki tek kart fiyatı ve kapalı ürün (booster, kutu) fiyat özeti, kaynak bağlantılı.
+- **İlan ver:** kart adını yazarken katalogdan öneri (klavye ve fareyle seçilir; marka, set ve resmî görsel kendiliğinden dolar, katalogda olmayan kart serbestçe yazılır), fotoğraf ya da kart görseli yükleme (tarayıcıda ~170 KB'a sıkıştırılır), görsel bağlantısı, canlı önizleme; Magic: The Gathering ve Pokémon için resmî kart görselini kaynağından (Scryfall / Pokémon TCG API) seçme.
 - **Teklifler:** para / takas / karma teklif, kabul–red, mesajlaşma; kabulde iki tarafın iletişim notu açılır.
 - **Profil:** takma ad, şehir, iletişim notu, ilan yönetimi, hesap anahtarını başka cihaza taşıma.
 - **Yüklenebilir uygulama (PWA):** Chrome'da “Yükle” ile masaüstü/telefon uygulaması gibi açılır.
@@ -46,4 +46,4 @@ Yerelde denemek için: `python3 -m http.server` ve `http://localhost:8000`. `js/
 - Site ödeme almaz, aracılık ya da yatırım hizmeti sunmaz; alışveriş taraflar arasındadır.
 - Resmî kart görselleri depoya kopyalanmaz, ilgili API'nin sunucusundan gösterilir; hakları sahiplerine aittir.
 - Örnek ilanlar (`ornek: true`) gerçek kullanıma geçmeden silinmeli.
-- Örnek ilanlar gerçek Pokémon, Magic, Yu-Gi-Oh! ve One Piece kartlarıdır; fiyat kaynakları ve kur `docs/fiyat-kaynaklari.md` dosyasında. Görsel yalnız doğrudan bağlantıya izin veren kaynaklardan (Scryfall, Pokémon TCG API) gösterilir; Görseli olmayan kartlar (Yu-Gi-Oh!, One Piece, yeni Pokémon setleri) kartın adını taşıyan temsilî çizimle görünür; çizim soyuttur, karakter ya da resmî kart sanatı içermez. Görsel önceliği: satıcının görseli › görsel bağlantısı › resmî görsel › temsilî çizim.
+- Örnek ilanlar gerçek Pokémon, Magic: The Gathering, Yu-Gi-Oh! ve One Piece kartlarıdır; fiyat kaynakları ve kur `docs/fiyat-kaynaklari.md` dosyasında. Görsel yalnız doğrudan bağlantıya izin veren kaynaklardan (Scryfall, Pokémon TCG API) gösterilir; Görseli olmayan kartlar (Yu-Gi-Oh!, One Piece, yeni Pokémon setleri) kartın adını taşıyan temsilî çizimle görünür; çizim soyuttur, karakter ya da resmî kart sanatı içermez. Görsel önceliği: satıcının görseli › görsel bağlantısı › resmî görsel › temsilî çizim.

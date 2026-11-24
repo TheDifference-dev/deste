@@ -7,7 +7,7 @@
 (() => {
   const { esc, norm } = D;
   const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
-  const MARKALAR = [["pokemon", "Pokémon"], ["yugioh", "Yu-Gi-Oh!"], ["magic", "Magic"], ["onepiece", "One Piece"]];
+  const MARKALAR = [["pokemon", "Pokémon"], ["yugioh", "Yu-Gi-Oh!"], ["magic", "Magic: The Gathering"], ["onepiece", "One Piece"]];
   const MARKA = Object.fromEntries(MARKALAR);
   const ADIM = 40;
   const K = { marka: "pokemon", q: "", limit: ADIM, son: "", elle: false };

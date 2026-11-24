@@ -30,7 +30,7 @@
     kirmizi: ["alev", "isin", "zikzak"], yesil: ["yaprak", "girdap", "dag"], mavi: ["dalga", "halka", "petek"], mor: ["sarmal", "pirilti", "cember"],
     siyah: ["hilal", "pul", "kare"], sari: ["simsek", "isin", "pusula"], kristal: ["kristal", "petek", "pirilti"]
   };
-  const MARKA = { pokemon: "Pokémon", yugioh: "Yu-Gi-Oh!", onepiece: "One Piece", magic: "Magic" };
+  const MARKA = { pokemon: "Pokémon", yugioh: "Yu-Gi-Oh!", onepiece: "One Piece", magic: "Magic: The Gathering", riftbound: "Riftbound", lorcana: "Disney Lorcana", gundam: "Gundam Card Game" };
   const X = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
   const kis = (s, n) => { s = String(s || ""); return s.length > n ? s.slice(0, n - 1) + "…" : s; };
   const rng = t => () => { t = (t + 0x6D2B79F5) >>> 0; let r = Math.imul(t ^ (t >>> 15), 1 | t); r ^= r + Math.imul(r ^ (r >>> 7), 61 | r); return ((r ^ (r >>> 14)) >>> 0) / 4294967296; };
