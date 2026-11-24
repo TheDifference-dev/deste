@@ -22,6 +22,9 @@
   D.RESMI = /^https:\/\/(images\.pokemontcg\.io|cards\.scryfall\.io)\/[A-Za-z0-9_\-./]+\.(png|jpg|jpeg|webp)(\?[0-9]+)?$/;
   D.resmiKullan = () => !window.claude;
   D.resmiGecerli = k => typeof k?.resmi === "string" && D.RESMI.test(k.resmi) && D.resmiKullan();
+  /* Satıcının eklediği görsel bağlantısı (her marka). Kopyalanmaz, kaynağından gösterilir; claude.ai'da CSP engeller. */
+  D.BAGLANTI = /^https:\/\/[^\s"'<>()\\]{4,480}$/;
+  D.gorselGecerli = k => typeof k?.gorsel === "string" && D.BAGLANTI.test(k.gorsel) && D.resmiKullan();
   D.resmiKaynak = u => /cards\.scryfall\.io/.test(u) ? "Scryfall · kart © Wizards of the Coast" : "Pokémon TCG API · kart © The Pokémon Company, Nintendo, Creatures, GAME FREAK";
   /* Dış görsel yüklenemezse temsilî çizime düş (satır içi onerror yok; yakalama aşamasında dinlenir). */
   document.addEventListener("error", e => {
@@ -37,10 +40,10 @@
     const sertifika = String(D.hash((k.id || "") + (k.baslik || "")) % 90000000 + 10000000);
     const yil = (String(k.set || "").match(/(19|20)\d\d/) || [""])[0];
     const ust = [yil, D.KAT[k.kategori] || ""].filter(Boolean).join(" ");
-    const src = resim || D.sanatFor(k), gercek = D.RESMI.test(src), yedek = D.sanatFor(k);
+    const src = resim || D.sanatFor(k), gercek = D.RESMI.test(src), dis = /^https:\/\//.test(src), yedek = D.sanatFor(k);
     return `<div class="slw"><div class="sl${gercek ? " gercek" : ""} ${ek}"><div class="sl-et"><div class="sl-sol"><b>${D.esc(ust || "DESTE")}</b><b>${D.esc(k.baslik || "Kart adı")}</b><i class="sl-bar"></i></div>
 <div class="sl-orta">${D.esc(kurum)}</div><div class="sl-sag"><b>#${String(D.hash(k.id || "a") % 400 + 1).padStart(2, "0")}</b><b>${D.esc(sag[0])}</b><b>${D.esc(sag[1])}</b><b>${sertifika}</b></div></div>
-<div class="sl-kuyu"><img src="${D.esc(src)}" alt="" loading="lazy" decoding="async"${gercek ? ` data-yedek="${D.esc(yedek)}" referrerpolicy="no-referrer"` : ""}></div></div></div>`;
+<div class="sl-kuyu"><img src="${D.esc(src)}" alt="" loading="lazy" decoding="async"${dis ? ` data-yedek="${D.esc(yedek)}" referrerpolicy="no-referrer"` : ""}></div></div></div>`;
   };
   D.slabArka = () => `<div class="slw"><div class="sl arka"><div class="sl-et"><span>deste</span></div><div class="sl-kuyu"><img src="img/kart-arka.webp" alt=""></div></div></div>`;
   D.sanatKart = (ad, i) => ({ id: "sanat-" + ad, baslik: D.SANAT_AD[ad], set: "deste 2026", durum: ["PSA","BGS","CGC"][i % 3], not: [10, 9.5, 9, 10, 8.5][i % 5], kategori: ["golcu","smac","kaleci"].includes(ad) ? (ad === "smac" ? "basketbol" : "futbol") : "diger" });

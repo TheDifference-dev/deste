@@ -209,7 +209,9 @@
         <label>Şehir<select id="iSehir"></select></label>
         <label class="tam" id="istenenSatir" hidden>Karşılığında aradığın kartlar <small>isteğe bağlı</small><input id="iIstenen" maxlength="140" placeholder="Örn. Lugia Neo Genesis, PSA 8+ Pikachu"></label>
         <label class="tam">Açıklama <small>isteğe bağlı</small><textarea id="iAcik" maxlength="800" placeholder="Kusurlar, kılıf, kargo tercihi…"></textarea></label>
-        <label class="tam">Fotoğraf <small>isteğe bağlı; ön yüz, net ve düz</small><input id="iFoto" type="file" accept="image/*"></label>
+        <label class="tam">Fotoğraf ya da kart görseli <small>isteğe bağlı; kendi çektiğin fotoğraf ya da kartın görseli</small><input id="iFoto" type="file" accept="image/*"></label>
+        <label class="tam" id="gorselSatir">ya da görsel bağlantısı <small>isteğe bağlı; https ile başlayan resim adresi</small><input id="iGorsel" type="url" maxlength="480" inputmode="url" placeholder="https://…/kart.jpg"></label>
+        <p class="tam mono soluk hak-not">Eklediğin görselin ilanda ve sitenin vitrininde gösterilmesine izin vermiş olursun. Görselden sen sorumlusun; hak sahibi itiraz ederse görsel kaldırılır.</p>
         <div class="tam satir"><button class="btn" id="iGonder">İlanı yayınla</button><span class="mono" id="iHata" role="alert"></span></div>
       </form>
       <aside class="onizle"><p class="mono">ÖNİZLEME</p><div id="onizleme"></div></aside>
@@ -243,7 +245,7 @@
   <div class="sutunlar"><i></i><i></i><i></i></div>
   <div class="izgara3">
     <div class="sol"><h2 class="h48 fl"><span>En sevilen kartlar,</span>bir takas uzağında.</h2><a class="btn" href="#pazar">Pazara gir</a>
-      <p class="yasal">© 2026 deste. Türkiye'de koleksiyoncular arası kart pazarı. Site ödeme almaz, aracılık ya da yatırım hizmeti sunmaz; alışveriş ve takas taraflar arasında yapılır. Örnek ilanlardaki fiyatlar temsilîdir.</p></div>
+      <p class="yasal">© 2026 deste. Türkiye'de koleksiyoncular arası kart pazarı. Site ödeme almaz, aracılık ya da yatırım hizmeti sunmaz; alışveriş ve takas taraflar arasında yapılır. Örnek ilanlardaki fiyatlar temsilîdir. İlan metinleri ve görselleri ilanı veren kullanıcıya aittir; deste yalnız yer sağlar. Kart adları ve görselleri hak sahiplerinindir, deste onlarla bağlantılı değildir. Hak ihlali bildirimi alındığında ilgili görsel kaldırılır<span id="bildirimAyak"></span>.</p></div>
     <div class="orta desenli"><div class="rozet-k"><span class="ik">₺0</span><span class="p24">Ücretsiz ilan</span><small>Komisyon yok</small></div><div class="rozet-k"><span class="ik">81</span><span class="p24">Türkiye geneli</span><small>Elden ya da kargo</small></div></div>
     <div class="sag"><p class="p24">Koleksiyon bir tutku.<br>Takasla büyüt.</p>
       <div class="baglar"><a href="#pazar">Pazar</a><a href="#ilan-ver">İlan ver</a><a href="#sss" data-git="sss">Sık sorulanlar</a></div></div>

@@ -452,3 +452,5 @@ dialog::backdrop{background:rgba(20,19,18,.6);backdrop-filter:blur(4px)}
   .kapali-l .m{grid-column:1/-1;text-align:left}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+.hak-not{text-transform:none;font-size:11px;line-height:1.5;margin:-6px 0 0}

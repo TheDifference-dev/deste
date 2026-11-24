@@ -5,7 +5,7 @@
   const rid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
   const opts = (arr, sec) => arr.map(([v, t]) => `<option value="${esc(v)}"${v === sec ? " selected" : ""}>${esc(t)}</option>`).join("");
   const RESMI = D.RESMI; // izinli resmî görsel adresleri (js/slab.js)
-  const S = { gorunum: "ana", onizFoto: null, resmi: "", sil: null, profilDoldu: false };
+  const S = { gorunum: "ana", onizFoto: null, resmi: "", gorsel: "", sil: null, profilDoldu: false };
 
   $("#fKat").insertAdjacentHTML("beforeend", opts(D.KATS));
   $("#iKat").innerHTML = opts(D.KATS);
@@ -29,7 +29,7 @@
   function ilanHTML(k, onizleme) {
     const key = esc(k.saticiId + "|" + k.id);
     const rz = [k.tip === "takas" ? "Takas" : k.tip === "ikisi" ? "Satış + takas" : "Satılık", k.satildi ? "Satıldı" : k.rezerve ? "Anlaşma var" : "", k.ornek ? "Örnek ilan" : ""].filter(Boolean);
-    return `<article class="ilan" ${onizleme ? "" : `data-ac="${key}" tabindex="0" role="button"`} data-egim>${D.slab(k, onizleme && S.onizFoto ? S.onizFoto : onizleme && S.resmi ? S.resmi : resim(k))}
+    return `<article class="ilan" ${onizleme ? "" : `data-ac="${key}" tabindex="0" role="button"`} data-egim>${D.slab(k, onizleme && S.onizFoto ? S.onizFoto : onizleme && S.gorsel ? S.gorsel : onizleme && S.resmi ? S.resmi : resim(k))}
 <div class="rozetler">${rz.map((r, i) => `<span class="rz${i === 0 ? " ak" : ""}">${esc(r)}</span>`).join("")}</div>
 <h3>${esc(k.baslik || "Kart adı")}</h3><p class="mono">${esc(D.dereceMetni(k))}${k.sehir ? " · " + esc(k.sehir) : ""}</p><p class="fy">${esc(D.fiyatMetni(k))}</p><p class="mono">${esc(k.satici || "")}</p></article>`;
   }
@@ -57,13 +57,15 @@
       sehir: $("#iSehir").value, istenen: $("#iIstenen").value.trim(), aciklama: $("#iAcik").value.trim(), satici: ben().takmaAd || $("#iTakma").value.trim() || "Sen" };
   }
   function onizle() {
+    const g = ($("#iGorsel")?.value || "").trim(); S.gorsel = D.gorselGecerli({ gorsel: g }) ? g : "";
+    $("#gorselSatir").hidden = Veri.mod === "claude";
     const k = formIlan(); $("#notSatir").hidden = !dereceli(k.durum); $("#fiyatSatir").hidden = k.tip === "takas"; $("#istenenSatir").hidden = k.tip === "satis";
     $("#onizleme").innerHTML = ilanHTML(k, true) + resmiAraHTML(k);
   }
   /* resmî görsel arama: Scryfall (Magic) ve Pokémon TCG API; görseller kaynağından gösterilir, kopyalanmaz */
   const resmiDestek = kat => (kat === "magic" || kat === "pokemon") && Veri.mod !== "claude";
   function resmiAraHTML(k) {
-    if (!resmiDestek(k.kategori)) return `<p class="mono soluk" style="margin-top:14px;text-transform:none">${Veri.mod === "claude" ? "" : "Fotoğraf eklemezsen ilan temsilî bir deste kartıyla görünür."}</p>`;
+    if (!resmiDestek(k.kategori)) return `<p class="mono soluk" style="margin-top:14px;text-transform:none">${Veri.mod === "claude" ? "" : "Görsel eklemezsen ilan temsilî bir deste kartıyla görünür."}</p>`;
     return `<div class="resmi"><button type="button" class="btn cizgi" id="resmiAra">Resmî kart görselini bul</button>${S.resmi ? ` <button type="button" class="btn cizgi" id="resmiKaldir">Kaldır</button>` : ""}<div class="resmi-sonuc" id="resmiSonuc"></div>
 <p class="mono soluk" style="text-transform:none;margin-top:8px">Kaynak: ${k.kategori === "magic" ? "Scryfall" : "Pokémon TCG API"}. Görsel kaynağından gösterilir; kart görselleri hak sahiplerine aittir.</p></div>`;
   }
@@ -98,7 +100,7 @@
   $("#onizleme").addEventListener("click", e => {
     if (e.target.closest("#resmiAra")) resmiAra();
     else if (e.target.closest("#resmiKaldir")) { S.resmi = ""; onizle(); }
-    else { const b = e.target.closest(".resmi-sec"); if (b && RESMI.test(b.dataset.url)) { S.resmi = b.dataset.url; S.onizFoto = null; $("#iFoto").value = ""; onizle(); } }
+    else { const b = e.target.closest(".resmi-sec"); if (b && RESMI.test(b.dataset.url)) { S.resmi = b.dataset.url; S.onizFoto = null; $("#iFoto").value = ""; $("#iGorsel").value = ""; onizle(); } }
   });
   async function sikistir(file) {
     const url = URL.createObjectURL(file);
@@ -109,7 +111,7 @@
       let q = .82, d = c.toDataURL("image/jpeg", q); while (d.length > 170000 && q > .35) { q -= .08; d = c.toDataURL("image/jpeg", q); } return d;
     } finally { URL.revokeObjectURL(url); }
   }
-  $("#iFoto").onchange = async e => { const f = e.target.files[0]; S.onizFoto = null; if (f) { try { S.onizFoto = await sikistir(f); S.resmi = ""; } catch { $("#iHata").textContent = "Bu dosya okunamadı; JPG ya da PNG dene."; } } onizle(); };
+  $("#iFoto").onchange = async e => { const f = e.target.files[0]; S.onizFoto = null; if (f) { try { S.onizFoto = await sikistir(f); S.resmi = ""; $("#iGorsel").value = ""; } catch { $("#iHata").textContent = "Bu dosya okunamadı; JPG ya da PNG dene."; } } onizle(); };
   $("#ilanForm").addEventListener("input", e => { if (e.target.id !== "iFoto") onizle(); });
   $("#ilanForm").addEventListener("change", e => { if (e.target.id !== "iFoto") onizle(); });
   $("#ilanForm").onsubmit = async e => {
@@ -125,9 +127,9 @@
       let foto = false;
       if (S.onizFoto) { foto = await Veri.fotoKaydet(id, S.onizFoto); }
       const kayit = { id, baslik: k.baslik, kategori: k.kategori, set: k.set, durum: k.durum, not: dereceli(k.durum) ? k.not : null, tip: k.tip, fiyat: k.tip === "takas" ? null : k.fiyat,
-        sehir: k.sehir, istenen: k.tip === "satis" ? "" : k.istenen, aciklama: k.aciklama, foto, resmi: !foto && S.resmi ? S.resmi : "", tarih: Date.now(), satildi: false, rezerve: false };
+        sehir: k.sehir, istenen: k.tip === "satis" ? "" : k.istenen, aciklama: k.aciklama, foto, gorsel: !foto && S.gorsel ? S.gorsel : "", resmi: !foto && !S.gorsel && S.resmi ? S.resmi : "", tarih: Date.now(), satildi: false, rezerve: false };
       await Veri.yaz("ilanlar", c => { const l = Array.isArray(c.kartlar) ? c.kartlar : []; l.push(kayit); return { ...c, takmaAd: c.takmaAd || ad, sehir: c.sehir || k.sehir, kartlar: l, guncel: Date.now() }; });
-      $("#ilanForm").reset(); S.onizFoto = null; S.resmi = ""; h.textContent = ""; bildir("İlanın yayında."); location.hash = "#pazar";
+      $("#ilanForm").reset(); S.onizFoto = null; S.resmi = ""; S.gorsel = ""; h.textContent = ""; bildir("İlanın yayında."); location.hash = "#pazar";
     } catch (err) { h.textContent = Veri.hataMetni(err); } finally { $("#iGonder").disabled = !yazmaHazir(); }
   };
 
@@ -200,8 +202,8 @@ ${ben().takmaAd ? "" : `<label class="tam">Takma adın<input id="tTakma" maxleng
 <label class="tam" id="tMetinS">Kartı yaz<input id="tMetin" maxlength="140" placeholder="Örn. Pikachu Promo, PSA 9"></label>
 <label class="tam">Mesaj <small>isteğe bağlı</small><textarea id="tMesaj" maxlength="300"></textarea></label>
 <div class="tam satir"><button class="btn">Teklifi gönder</button><span class="mono" id="tHata" role="alert"></span></div></form>`;
-    const kaynak = k.foto ? "Satıcının fotoğrafı" : D.resmiGecerli(k) ? "Resmî görsel · " + D.resmiKaynak(k.resmi) : "Fotoğraf eklenmemiş · temsilî deste kartı";
-    $("#detay").innerHTML = `<div class="detay"><div class="dg" data-egim>${D.slab(k, resim(k))}<p class="mono">${esc(kaynak)}</p></div><div class="di">
+    const kaynak = k.foto ? "Satıcının eklediği görsel" : D.gorselGecerli(k) ? "Satıcının eklediği görsel bağlantısı" : D.resmiGecerli(k) ? "Resmî görsel · " + D.resmiKaynak(k.resmi) : "Fotoğraf eklenmemiş · temsilî deste kartı";
+    $("#detay").innerHTML = `<div class="detay"><div class="dg" data-egim>${D.slab(k, resim(k))}<p class="mono">${esc(kaynak)}</p>${bildirimBag(k)}</div><div class="di">
 <p class="mono">${esc(D.KAT[k.kategori] || "Diğer")}${k.ornek ? " · örnek ilan" : ""}</p><h2>${esc(k.baslik)}</h2><p class="fy">${esc(D.fiyatMetni(k))}</p>
 <dl><dt>Durum</dt><dd>${esc(D.dereceMetni(k))}</dd>${k.set ? `<dt>Set / yıl</dt><dd>${esc(k.set)}</dd>` : ""}<dt>Satıcı</dt><dd>${esc(k.satici)}</dd>${k.sehir ? `<dt>Şehir</dt><dd>${esc(k.sehir)}</dd>` : ""}${k.istenen ? `<dt>Aradığı</dt><dd>${esc(k.istenen)}</dd>` : ""}<dt>Eklendi</dt><dd>${D.sure(k.tarih)}</dd></dl>
 ${k.aciklama ? `<p style="white-space:pre-line;color:rgba(255,255,255,.85)">${esc(k.aciklama)}</p>` : ""}${alt}</div></div>`;
@@ -210,6 +212,13 @@ ${k.aciklama ? `<p style="white-space:pre-line;color:rgba(255,255,255,.85)">${es
     if (!dlg.open) dlg.showModal();
   }
   D.ac = ac;
+  /* hak ihlali bildirimi: ayar.js'te bildirimEposta tanımlıysa e-posta taslağı açar */
+  function bildirimBag(k) {
+    const e = (window.DESTE_AYAR || {}).bildirimEposta; if (!e || !(k.foto || k.gorsel || k.resmi)) return "";
+    const konu = encodeURIComponent("deste hak ihlali bildirimi: " + (k.baslik || "")), govde = encodeURIComponent(`İlan: ${k.baslik || ""}\nİlan no: ${k.saticiId || ""}|${k.id || ""}\nHak sahibi / temsilci:\nAçıklama:\n`);
+    return `<p class="mono"><a class="soluk" href="mailto:${esc(e)}?subject=${konu}&body=${govde}">Görsel için hak ihlali bildir</a></p>`;
+  }
+  { const e = (window.DESTE_AYAR || {}).bildirimEposta, y = $("#bildirimAyak"); if (e && y) y.innerHTML = `: <a href="mailto:${esc(e)}">${esc(e)}</a>`; }
   async function teklifGonder(k) {
     const tip = $("#tTip").value, tutar = Math.round(+$("#tTutar").value || 0), kart = $("#tKart").value, metin = $("#tMetin").value.trim(), msj = $("#tMesaj").value.trim(), h = $("#tHata"), ad = $("#tTakma")?.value.trim();
     if ($("#tTakma") && ad.length < 2) return h.textContent = "Takma adını yaz.";

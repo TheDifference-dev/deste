@@ -15,9 +15,10 @@
   D.aktif = () => D.ilanlar().filter(k => !k.satildi);
   let yenileZ;
   D.yenile = () => { clearTimeout(yenileZ); yenileZ = setTimeout(() => window.dispatchEvent(new Event("deste:veri")), 80); };
-  /* görsel önceliği: satıcının fotoğrafı > resmî kart görseli (izinli kaynak, claude.ai dışında) > özgün deste çizimi */
+  /* görsel önceliği: satıcının fotoğrafı > satıcının görsel bağlantısı > resmî kart görseli (izinli kaynak, claude.ai dışında) > özgün deste çizimi */
   D.resim = k => {
     if (k.foto) { const c = Veri.fotoOnbellek(k.saticiId, k.id); if (c) return c; if (c === undefined) Veri.fotoAdresi(k.saticiId, k.id, k.foto).then(u => u && D.yenile()); }
+    if (D.gorselGecerli(k)) return k.gorsel;
     if (D.resmiGecerli(k)) return k.resmi;
     return D.sanatFor(k);
   };
