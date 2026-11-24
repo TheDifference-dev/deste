@@ -5,7 +5,7 @@
   const rid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
   const opts = (arr, sec) => arr.map(([v, t]) => `<option value="${esc(v)}"${v === sec ? " selected" : ""}>${esc(t)}</option>`).join("");
   const RESMI = D.RESMI; // izinli resmî görsel adresleri (js/slab.js)
-  const S = { gorunum: "ana", onizFoto: null, resmi: "", gorsel: "", sil: null, profilDoldu: false };
+  const S = { gorunum: "ana", onizFoto: null, resmi: "", gorsel: "", tur: "", sil: null, profilDoldu: false };
 
   $("#fKat").insertAdjacentHTML("beforeend", opts(D.KATS));
   $("#iKat").innerHTML = opts(D.KATS);
@@ -54,7 +54,7 @@
   function formIlan() {
     return { id: "onizleme", saticiId: Veri.uid || "", baslik: $("#iBaslik").value.trim(), kategori: $("#iKat").value, set: $("#iSet").value.trim(), durum: $("#iDurum").value,
       not: $("#iNot").value === "" ? null : +$("#iNot").value, tip: $('[name=iTip]:checked').value, fiyat: $("#iFiyat").value === "" ? null : Math.round(+$("#iFiyat").value),
-      sehir: $("#iSehir").value, istenen: $("#iIstenen").value.trim(), aciklama: $("#iAcik").value.trim(), satici: ben().takmaAd || $("#iTakma").value.trim() || "Sen" };
+      sehir: $("#iSehir").value, istenen: $("#iIstenen").value.trim(), aciklama: $("#iAcik").value.trim(), satici: ben().takmaAd || $("#iTakma").value.trim() || "Sen", tur: S.tur };
   }
   function onizle() {
     const g = ($("#iGorsel")?.value || "").trim(); S.gorsel = D.gorselGecerli({ gorsel: g }) ? g : "";
@@ -74,7 +74,7 @@
     $("#iBaslik").value = String(k.ad || "").slice(0, 90);
     if (D.KAT[k.marka]) $("#iKat").value = k.marka;
     $("#iSet").value = [k.set, k.numara, k.yil].filter(Boolean).join(" · ").slice(0, 60);
-    S.resmi = D.resmiGecerli({ resmi: k.resmi }) && resmiDestek(k.marka) ? k.resmi : "";
+    S.resmi = D.resmiGecerli({ resmi: k.resmi }) && resmiDestek(k.marka) ? k.resmi : ""; S.tur = String(k.tur || "").slice(0, 30);
     $("#iHata").textContent = ""; onizle();
   };
   async function resmiAra() {
@@ -127,9 +127,9 @@
       let foto = false;
       if (S.onizFoto) { foto = await Veri.fotoKaydet(id, S.onizFoto); }
       const kayit = { id, baslik: k.baslik, kategori: k.kategori, set: k.set, durum: k.durum, not: dereceli(k.durum) ? k.not : null, tip: k.tip, fiyat: k.tip === "takas" ? null : k.fiyat,
-        sehir: k.sehir, istenen: k.tip === "satis" ? "" : k.istenen, aciklama: k.aciklama, foto, gorsel: !foto && S.gorsel ? S.gorsel : "", resmi: !foto && !S.gorsel && S.resmi ? S.resmi : "", tarih: Date.now(), satildi: false, rezerve: false };
+        sehir: k.sehir, istenen: k.tip === "satis" ? "" : k.istenen, aciklama: k.aciklama, foto, gorsel: !foto && S.gorsel ? S.gorsel : "", resmi: !foto && !S.gorsel && S.resmi ? S.resmi : "", tarih: Date.now(), satildi: false, rezerve: false, ...(S.tur ? { tur: S.tur } : {}) };
       await Veri.yaz("ilanlar", c => { const l = Array.isArray(c.kartlar) ? c.kartlar : []; l.push(kayit); return { ...c, takmaAd: c.takmaAd || ad, sehir: c.sehir || k.sehir, kartlar: l, guncel: Date.now() }; });
-      $("#ilanForm").reset(); S.onizFoto = null; S.resmi = ""; S.gorsel = ""; h.textContent = ""; bildir("İlanın yayında."); location.hash = "#pazar";
+      $("#ilanForm").reset(); S.onizFoto = null; S.resmi = ""; S.gorsel = ""; S.tur = ""; h.textContent = ""; bildir("İlanın yayında."); location.hash = "#pazar";
     } catch (err) { h.textContent = Veri.hataMetni(err); } finally { $("#iGonder").disabled = !yazmaHazir(); }
   };
 
@@ -202,7 +202,7 @@ ${ben().takmaAd ? "" : `<label class="tam">Takma adın<input id="tTakma" maxleng
 <label class="tam" id="tMetinS">Kartı yaz<input id="tMetin" maxlength="140" placeholder="Örn. Pikachu Promo, PSA 9"></label>
 <label class="tam">Mesaj <small>isteğe bağlı</small><textarea id="tMesaj" maxlength="300"></textarea></label>
 <div class="tam satir"><button class="btn">Teklifi gönder</button><span class="mono" id="tHata" role="alert"></span></div></form>`;
-    const kaynak = k.foto ? "Satıcının eklediği görsel" : D.gorselGecerli(k) ? "Satıcının eklediği görsel bağlantısı" : D.resmiGecerli(k) ? "Resmî görsel · " + D.resmiKaynak(k.resmi) : "Fotoğraf eklenmemiş · temsilî deste kartı";
+    const kaynak = k.foto ? "Satıcının eklediği görsel" : D.gorselGecerli(k) ? "Satıcının eklediği görsel bağlantısı" : D.resmiGecerli(k) ? "Resmî görsel · " + D.resmiKaynak(k.resmi) : "Görsel eklenmemiş · deste temsilî çizimi";
     $("#detay").innerHTML = `<div class="detay"><div class="dg" data-egim>${D.slab(k, resim(k))}<p class="mono">${esc(kaynak)}</p>${bildirimBag(k)}</div><div class="di">
 <p class="mono">${esc(D.KAT[k.kategori] || "Diğer")}${k.ornek ? " · örnek ilan" : ""}</p><h2>${esc(k.baslik)}</h2><p class="fy">${esc(D.fiyatMetni(k))}</p>
 <dl><dt>Durum</dt><dd>${esc(D.dereceMetni(k))}</dd>${k.set ? `<dt>Set / yıl</dt><dd>${esc(k.set)}</dd>` : ""}<dt>Satıcı</dt><dd>${esc(k.satici)}</dd>${k.sehir ? `<dt>Şehir</dt><dd>${esc(k.sehir)}</dd>` : ""}${k.istenen ? `<dt>Aradığı</dt><dd>${esc(k.istenen)}</dd>` : ""}<dt>Eklendi</dt><dd>${D.sure(k.tarih)}</dd></dl>

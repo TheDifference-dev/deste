@@ -1,6 +1,6 @@
 /* deste: çevrimdışı kabuk. Sayfalar ağdan, yoksa önbellekten; görseller önbellekten. Veritabanı istekleri önbelleğe alınmaz. */
-const SURUM = "deste-v2";
-const KABUK = ["./", "index.html", "css/site.css", "js/ayar.js", "js/vendor/supabase.js", "js/veri.js", "js/slab.js", "js/ana.js", "js/katalog.js", "js/uygulama.js", "data/katalog.json", "data/tr-fiyatlar.json", "img/gren.png", "img/kart-arka.webp"];
+const SURUM = "deste-v3";
+const KABUK = ["./", "index.html", "css/site.css", "js/ayar.js", "js/vendor/supabase.js", "js/veri.js", "js/slab.js", "js/cizim.js", "js/ana.js", "js/katalog.js", "js/uygulama.js", "data/katalog.json", "data/tr-fiyatlar.json", "img/gren.png", "img/kart-arka.webp"];
 self.addEventListener("install", e => e.waitUntil(caches.open(SURUM).then(c => c.addAll(KABUK)).then(() => self.skipWaiting())));
 self.addEventListener("activate", e => e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== SURUM).map(k => caches.delete(k)))).then(() => self.clients.claim())));
 self.addEventListener("fetch", e => {

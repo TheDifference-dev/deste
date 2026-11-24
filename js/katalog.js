@@ -21,7 +21,7 @@
     if (!Array.isArray(j)) throw new Error("bicim");
     return j.filter(x => x && MARKA[x.marka] && str(x.ad)).map((x, i) => {
       const r = { id: str(x.id) || "k" + i, marka: x.marka, ad: str(x.ad), set: str(x.set), numara: str(x.numara), yil: str(x.yil), nadirlik: str(x.nadirlik),
-        sira: Number(x.sira) > 0 ? Number(x.sira) : 9999, olcut: str(x.olcut), kaynak: str(x.kaynak), resmi: typeof x.resmi === "string" && D.RESMI.test(x.resmi) ? x.resmi : "" };
+        sira: Number(x.sira) > 0 ? Number(x.sira) : 9999, olcut: str(x.olcut), kaynak: str(x.kaynak), tur: str(x.tur), resmi: typeof x.resmi === "string" && D.RESMI.test(x.resmi) ? x.resmi : "" };
       r._n = norm(r.ad).trim(); r._ara = norm([r.ad, r.set, r.numara, r.yil, r.nadirlik].join(" "));
       return r;
     }).sort((a, b) => a.sira - b.sira);
@@ -74,7 +74,8 @@
   const disBag = (url, ic) => url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${ic}</a>` : ic;
 
   /* ---------- kart ---------- */
-  const kartObj = k => ({ id: "katalog-" + k.id, baslik: k.ad, set: [k.set, k.yil].filter(Boolean).join(" "), durum: "Ham", kategori: k.marka, resmi: k.resmi });
+  const kartObj = k => ({ id: "katalog-" + k.id, baslik: k.ad, set: [k.set, k.yil].filter(Boolean).join(" "), durum: "Ham", kategori: k.marka, resmi: k.resmi,
+    cizimSet: k.set, numara: k.numara, nadirlik: k.nadirlik, yil: k.yil, tur: k.tur });
   function pazarHTML(k, bas) {
     const n = ilanSay(k, bas);
     return `<p>${n ? `Pazarda <b>${n}</b> ilan` : "Pazarda ilan yok"}</p><div class="satir">${n ? `<button type="button" class="btn cizgi" data-kat-ilan="${esc(k.id)}">İlanları gör</button>` : ""}<button type="button" class="btn" data-kat-sat="${esc(k.id)}">Bu kartı sat</button></div>`;
@@ -87,7 +88,7 @@
   function kartHTML(k, bas) {
     const o = kartObj(k), resmi = D.resmiGecerli(o), f = trFiyat(k);
     const tr = f ? `<p class="kk-tr">Mağazada: ${disBag(f.url, `${esc(D.TL.format(f.fiyat))} · ${esc(f.magaza)}`)}${f.tukendi ? " · stokta yok" : ""}${TR.tarih ? ` <span class="soluk">(${esc(tarihMetni(TR.tarih))})</span>` : ""}</p>` : "";
-    return `<article class="kk" data-egim data-kat="${esc(k.id)}">${D.slab(o, resmi ? k.resmi : D.sanatFor(o))}
+    return `<article class="kk" data-egim data-kat="${esc(k.id)}">${D.slab(o, resmi ? k.resmi : D.cizim({ ...o, set: o.cizimSet }))}
 <h3>${esc(k.ad)}</h3><p class="mono">${esc([k.set, k.numara].filter(Boolean).join(" · ") || "—")}</p><p class="mono kk-sira">#${esc(k.sira < 9999 ? k.sira : "–")}${k.nadirlik ? " · " + esc(k.nadirlik) : ""}</p>
 <div class="kk-pazar" data-pz="${esc(k.id)}">${pazarHTML(k, bas)}</div>${tr}${atifHTML(k, resmi)}</article>`;
   }

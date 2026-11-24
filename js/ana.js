@@ -15,12 +15,12 @@
   D.aktif = () => D.ilanlar().filter(k => !k.satildi);
   let yenileZ;
   D.yenile = () => { clearTimeout(yenileZ); yenileZ = setTimeout(() => window.dispatchEvent(new Event("deste:veri")), 80); };
-  /* görsel önceliği: satıcının fotoğrafı > satıcının görsel bağlantısı > resmî kart görseli (izinli kaynak, claude.ai dışında) > özgün deste çizimi */
+  /* görsel önceliği: satıcının fotoğrafı > satıcının görsel bağlantısı > resmî kart görseli > temsilî çizim (izinli kaynak, claude.ai dışında) > özgün deste çizimi */
   D.resim = k => {
     if (k.foto) { const c = Veri.fotoOnbellek(k.saticiId, k.id); if (c) return c; if (c === undefined) Veri.fotoAdresi(k.saticiId, k.id, k.foto).then(u => u && D.yenile()); }
     if (D.gorselGecerli(k)) return k.gorsel;
     if (D.resmiGecerli(k)) return k.resmi;
-    return D.sanatFor(k);
+    return D.cizim(k); // temsilî çizim, kartın adıyla (js/cizim.js)
   };
   D.sure = t => { const d = (Date.now() - (t || 0)) / 6e4; return d < 1 ? "az önce" : d < 60 ? `${Math.round(d)} dk önce` : d < 1440 ? `${Math.round(d / 60)} sa önce` : new Date(t).toLocaleDateString("tr-TR", { day: "numeric", month: "short" }); };
 

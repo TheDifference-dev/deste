@@ -40,7 +40,7 @@
     const sertifika = String(D.hash((k.id || "") + (k.baslik || "")) % 90000000 + 10000000);
     const yil = (String(k.set || "").match(/(19|20)\d\d/) || [""])[0];
     const ust = [yil, D.KAT[k.kategori] || ""].filter(Boolean).join(" ");
-    const src = resim || D.sanatFor(k), gercek = D.RESMI.test(src), dis = /^https:\/\//.test(src), yedek = D.sanatFor(k);
+    const ciz = D.cizim || D.sanatFor, src = resim || ciz(k), gercek = D.RESMI.test(src), dis = /^https:\/\//.test(src), yedek = ciz(k);
     return `<div class="slw"><div class="sl${gercek ? " gercek" : ""} ${ek}"><div class="sl-et"><div class="sl-sol"><b>${D.esc(ust || "DESTE")}</b><b>${D.esc(k.baslik || "Kart adı")}</b><i class="sl-bar"></i></div>
 <div class="sl-orta">${D.esc(kurum)}</div><div class="sl-sag"><b>#${String(D.hash(k.id || "a") % 400 + 1).padStart(2, "0")}</b><b>${D.esc(sag[0])}</b><b>${D.esc(sag[1])}</b><b>${sertifika}</b></div></div>
 <div class="sl-kuyu"><img src="${D.esc(src)}" alt="" loading="lazy" decoding="async"${dis ? ` data-yedek="${D.esc(yedek)}" referrerpolicy="no-referrer"` : ""}></div></div></div>`;
