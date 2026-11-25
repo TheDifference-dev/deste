@@ -1,6 +1,6 @@
 # deste — kart takas pazarı
 
-Türkiye'de koleksiyoncuların kartlarını ilan verdiği, birbirine **para, takas ya da para + takas** teklifi gönderdiği bir pazar yeri. Pokémon, Yu-Gi-Oh!, Magic: The Gathering, One Piece, Riftbound, Disney Lorcana, Gundam Card Game ve futbol, basketbol kartları için.
+Türkiye'de koleksiyoncuların kartlarını ilan verdiği, birbirine **para, takas ya da para + takas** teklifi gönderdiği bir pazar yeri. Pokémon, Yu-Gi-Oh!, Magic: The Gathering, One Piece, Dragon Ball Super Fusion World ve futbol, basketbol kartları için.
 
 Tasarım dili tradetash.com'dan esinlenir: taş gri sahne, üç sütunlu ızgara, kaydırmayla dönen 3B dereceli kart kılıfı, renkli katman geçişleri, kayan kart galerisi, adım izi. Kod, metinler ve kart çizimleri bu projeye özgüdür; başka bir markanın görseli ya da adı kullanılmaz.
 
