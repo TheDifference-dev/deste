@@ -79,6 +79,9 @@
   /* ---------- ortak arayüz ---------- */
   V.baslat = async (cb) => {
     dinleyici = cb || dinleyici;
+    /* ?mod=yerel: test ve deneme için canlı veritabanına hiç bağlanmadan tarayıcı içi mod */
+    let zorla = ""; try { zorla = new URLSearchParams(location.search).get("mod") || ""; } catch {}
+    if (zorla === "yerel") { V.mod = "yerel"; yerelBaslat(); return; }
     if (window.claude && typeof window.claude.use === "function") { V.mod = "claude"; return claudeBaslat(); }
     if (window.DESTE_AYAR?.supabaseUrl && window.supabase?.createClient) { V.mod = "supabase"; return sbBaslat(); }
     V.mod = "yerel"; yerelBaslat();
